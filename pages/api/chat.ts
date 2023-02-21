@@ -9,7 +9,7 @@ const firstMessge = initialMessages[0].message
 
 // @TODO: unit test this. good case for unit testing
 const generatePromptFromMessages = (messages: Message[]) => {
-  console.log('== INITIAL messages ==', messages)
+  // console.log('== INITIAL messages ==', messages)
 
   let prompt = ''
 
@@ -18,7 +18,7 @@ const generatePromptFromMessages = (messages: Message[]) => {
 
   // remove first conversaiton (first 2 messages)
   const messagesWithoutFirstConvo = messages.slice(2)
-  console.log(' == messagesWithoutFirstConvo', messagesWithoutFirstConvo)
+  // console.log(' == messagesWithoutFirstConvo', messagesWithoutFirstConvo)
 
   // early return if no messages
   if (messagesWithoutFirstConvo.length == 0) {
@@ -40,7 +40,7 @@ export default async function handler(req: NextRequest) {
   // read body from request
   const body = await req.json()
 
-  console.log('== body ==', body)
+  // console.log('== body ==', body)
   let user_input = body.messages[body.messages.length - 1].message
 
   const payload = {
@@ -51,8 +51,8 @@ export default async function handler(req: NextRequest) {
     'Content-Type': 'application/json',
   }
 
-  console.log('== payload ==', payload)
-  console.log('== env ==', process.env)
+  // console.log('== payload ==', payload)
+  // console.log('== env ==', process.env)
   const response = await fetch(`${process.env.ADDRESS}`, {
     headers: requestHeaders,
     method: 'POST',
@@ -67,7 +67,7 @@ export default async function handler(req: NextRequest) {
       text: `ERROR with API integration. ${data.error.message}`,
     })
   }
-  console.log(data)
+  // console.log(data)
 
   // return response with 200 and stringify json text
   return NextResponse.json({ text: data.response })
